@@ -3,8 +3,8 @@ import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from 'angularfire2';
-// import { AngularFireDatabaseModule } from 'angularfire2/database';
-// import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import {RouterModule} from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -36,7 +36,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase).ngModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     NgbModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent},
