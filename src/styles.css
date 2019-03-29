@@ -5,7 +5,7 @@ body {
   padding-top: 80px;
 }
 
-.dropdown-toggle {
+.dropdown-toggle, .dropdown-item {
   cursor: pointer;
 }
 
