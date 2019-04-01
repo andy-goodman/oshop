@@ -12,6 +12,10 @@ export class CategoryService {
     return this.db.list('/categories',
         ref => ref.orderByChild('name')
     )
-    .valueChanges();
+    .snapshotChanges()
+    .map(changes => {
+      console.log('changes', changes);
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    });
   }
 }
