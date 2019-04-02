@@ -12,6 +12,7 @@ import {Product} from '../../domain/Product';
 })
 export class ProductFormComponent implements OnInit {
 
+  id: string;
   categories$;
   product: Product = {
     title: '',
@@ -28,9 +29,9 @@ export class ProductFormComponent implements OnInit {
   ) {
     this.categories$ = categoryService.getCategories();
 
-    const id = this.route.snapshot.params.id;
-    if (id) {
-      this.productService.get(id).take(1).subscribe(p => this.product = {
+    this.id = this.route.snapshot.params.id;
+    if (this.id) {
+      this.productService.get(this.id).take(1).subscribe(p => this.product = {
         title: p['title'],
         imageUrl: p['imageUrl'],
         price: p['price'],
@@ -43,7 +44,11 @@ export class ProductFormComponent implements OnInit {
   }
 
   save(product) {
-    this.productService.create(product);
+    if (this.id) {
+      this.productService.update(this.id, product);
+    } else {
+      this.productService.create(product);
+    }
     this.router.navigate(['/admin/products']);
   }
 
