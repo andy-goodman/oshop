@@ -6,6 +6,11 @@ import {AngularFireDatabase} from 'angularfire2/database';
 })
 export class CategoryService {
 
+  private objectToCategory = object => { return {
+    key: object['key'],
+    name: object['name']
+  }};
+
   constructor(private db: AngularFireDatabase) { }
 
   getAll() {
@@ -16,6 +21,9 @@ export class CategoryService {
     .map(changes => {
       console.log('changes', changes);
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    })
+    .map( objects => {
+      return objects.map(this.objectToCategory);
     });
   }
 }

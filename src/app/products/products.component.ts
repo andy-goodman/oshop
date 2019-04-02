@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {ProductService} from '../service/product.service';
 import {CategoryService} from '../service/category.service';
+import {ActivatedRoute} from '@angular/router';
+import {Product} from '../models/Product';
 
 @Component({
   selector: 'app-products-234',
@@ -9,11 +11,30 @@ import {CategoryService} from '../service/category.service';
 })
 export class ProductsComponent {
 
-  products$;
+  products: Product[] = [];
+  filteredProducts: Product[] = [];
   categories$;
 
-  constructor(productService: ProductService, categoryService: CategoryService) {
-    this.products$ = productService.getAll();
+  category: string;
+
+  constructor(
+    route: ActivatedRoute,
+    productService: ProductService,
+    categoryService: CategoryService
+  ) {
+    productService.getAll().subscribe(products => {
+      const that = this;
+      this.products = products;
+
+      route.queryParamMap.subscribe( params => {
+        that.category = params.get('category');
+        console.log('this.category', that.category);
+
+        that.filteredProducts = (that.category) ?
+          that.products.filter( p => p.category === that.category) :
+          that.products;
+      });
+    });
     this.categories$ = categoryService.getAll();
   }
 
