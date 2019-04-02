@@ -22,11 +22,14 @@ export class ProductsComponent {
     productService: ProductService,
     categoryService: CategoryService
   ) {
-    productService.getAll().subscribe(products => {
-      const that = this;
-      this.products = products;
-
-      route.queryParamMap.subscribe( params => {
+    const that = this;
+    productService
+      .getAll()
+      .switchMap(products => {
+        this.products = products;
+        return route.queryParamMap;
+      })
+      .subscribe( params => {
         that.category = params.get('category');
         console.log('this.category', that.category);
 
@@ -34,7 +37,6 @@ export class ProductsComponent {
           that.products.filter( p => p.category === that.category) :
           that.products;
       });
-    });
     this.categories$ = categoryService.getAll();
   }
 
