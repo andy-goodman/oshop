@@ -27,7 +27,7 @@ export class ProductFormComponent implements OnInit {
     private categoryService: CategoryService,
     private productService: ProductService
   ) {
-    this.categories$ = categoryService.getCategories();
+    this.categories$ = categoryService.getAll();
 
     this.id = this.route.snapshot.params.id;
     console.log('init card', this.id);
