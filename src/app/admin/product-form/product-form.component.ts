@@ -14,7 +14,7 @@ export class ProductFormComponent implements OnInit {
 
   id: string;
   categories$;
-  product: Product = {
+  product: any = {
     title: '',
     imageUrl: '',
     price: 0,
@@ -31,12 +31,7 @@ export class ProductFormComponent implements OnInit {
 
     this.id = this.route.snapshot.params.id;
     if (this.id) {
-      this.productService.get(this.id).take(1).subscribe(p => this.product = {
-        title: p['title'],
-        imageUrl: p['imageUrl'],
-        price: p['price'],
-        category: p['category']
-      });
+      this.productService.get(this.id).take(1).subscribe(p => this.product = p);
     }
   }
 

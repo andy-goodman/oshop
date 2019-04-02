@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {AngularFireDatabase} from 'angularfire2/database';
+import {Observable} from 'rxjs';
+import {Product} from '../domain/Product';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,14 @@ export class ProductService {
         console.log('changes', changes);
         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
       });
+      // .map( object => {
+      //   return {
+      //     title: object['title'],
+      //     imageUrl: object['imageUrl'],
+      //     price: object['price'],
+      //     category: object['category']
+      //   };
+      // });
   }
 
   get(productId) {
